@@ -14,6 +14,12 @@ Para o projeto funcionar:
 
 
 
-* **Instale as dependências:** flutter pub get.
+* **Instale as dependências:** 
+```bash
+flutter pub get.
+```
 
-* **Execute o aplicativo**: flutter run
+* **Execute o aplicativo**: 
+```bash
+flutter run
+```
