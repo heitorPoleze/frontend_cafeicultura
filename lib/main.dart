@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:frontend_cafeicultura/view/criar_conta.dart';
 import 'package:frontend_cafeicultura/view/login_page.dart';
 import 'config/app_colors.dart';
 
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
        initialRoute: '/',
        routes: {
         '/': (context) => const LoginPage(),
-        '/home': (context) => const MyHomePage(title: 'Flutter Demo Home Page')
+        '/home': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+        '/criarConta' : (context) => const CriarConta()
       },
     );
   }
