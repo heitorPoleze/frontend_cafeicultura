@@ -7,4 +7,5 @@ class AppColors {
   static const rosa = Color.fromRGBO(201, 124, 124, 1);
   static const appPreto = Color.fromRGBO(62, 59, 55, 1);
   static const marrom = Color.fromRGBO(75, 46, 27, 1);
+  static const verdeEscuro = Color.fromRGBO(104, 126, 96, 1);
 }

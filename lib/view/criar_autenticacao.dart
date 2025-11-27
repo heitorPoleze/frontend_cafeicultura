@@ -46,7 +46,7 @@ class _CriarAutenticacaoState extends State<CriarAutenticacao> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundGradient(
-        child: appCard(
+        child: AppCard(
           child: Form(
             key: _formKey,
             child: Column(

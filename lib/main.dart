@@ -5,6 +5,8 @@ import 'package:frontend_cafeicultura/view/criar_dados_pessoais.dart';
 import 'package:frontend_cafeicultura/view/criar_endereco.dart';
 import 'package:frontend_cafeicultura/view/criar_propriedade.dart';
 import 'package:frontend_cafeicultura/view/login_page.dart';
+import 'package:frontend_cafeicultura/view/home_page.dart';
+import 'package:frontend_cafeicultura/view/editar_dados_pessoais.dart';
 import 'config/app_colors.dart';
 
 void main() {
@@ -19,66 +21,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login',
+      title: 'AgroGest - Gestão para Cafeicultores',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.verdePrimaria),
       ),
        initialRoute: '/',
        routes: {
         '/': (context) => const LoginPage(),
-        '/home': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+        '/home': (context) => const HomePage(),
         '/criarConta' : (context) => const CriarAutenticacao(),
         '/dadosPessoais': (context) => const CriarDadosPessoais(),
         '/criarEndereco' : (context) => const CriarEndereco(),
         '/criarPropriedade' : (context) => const CriarPropriedade(),
+        '/editarDados' : (context) => const EditarDadosPessoais(),
       },
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

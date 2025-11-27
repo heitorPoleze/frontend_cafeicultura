@@ -9,6 +9,7 @@ class AppButton extends StatelessWidget {
   final Color? corHover; 
   final Color? corTexto;
   final Color? corTextoHover;
+  final Border? border;
 
   const AppButton({
     super.key,
@@ -18,6 +19,7 @@ class AppButton extends StatelessWidget {
     this.corHover,
     this.corTexto,
     this.corTextoHover,
+    this.border,
   });
 
   @override
@@ -26,34 +28,47 @@ class AppButton extends StatelessWidget {
     final hoverDefault = corHover ?? AppColors.marrom;
     final Color textDefault = corTexto ?? AppColors.marrom;
     final Color textHoverDefault = corTextoHover ?? AppColors.appBranco;
-
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        padding: WidgetStateProperty.all(
-          const EdgeInsets.symmetric(vertical: 16.0),
+    
+    return Container(
+      width: double.infinity,
+      decoration: border != null
+          ? BoxDecoration(
+              border: border,
+              borderRadius: BorderRadius.circular(10.0),
+            )
+          : null,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(vertical: 16.0),
+          ),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+            if (states.contains(WidgetState.hovered)) {
+              return textHoverDefault;
+            }
+            return textDefault;
+          }),
+          backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+            if (states.contains(WidgetState.hovered)) {
+              return hoverDefault;
+            }
+            return colorDefault;
+          }),
+          elevation: WidgetStateProperty.all(0),
         ),
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Text(
+          label,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-          if (states.contains(WidgetState.hovered)) {
-            return textHoverDefault;
-          }
-          return textDefault;
-        }),
-        backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-          if (states.contains(WidgetState.hovered)) {
-            return hoverDefault;
-          }
-          return colorDefault;
-        }),
-        textStyle: WidgetStateProperty.all(
-          const TextStyle(fontSize: 25.0),
-        ),
-      ),
-      child: Text(
-        label,
       ),
     );
   }

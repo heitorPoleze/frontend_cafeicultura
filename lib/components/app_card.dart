@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_cafeicultura/config/app_colors.dart';
 
-class appCard extends StatelessWidget {
+class AppCard extends StatelessWidget {
   final Widget child;
 
-  const appCard({super.key, required this.child});
+  const AppCard({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

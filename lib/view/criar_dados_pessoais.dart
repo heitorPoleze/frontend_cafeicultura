@@ -68,7 +68,7 @@ class _CriarDadosPessoaisState extends State<CriarDadosPessoais> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundGradient(
-        child: appCard(
+        child: AppCard(
           child: Form(
             key: _formKey,
             child: Column(

@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundGradient(
-        child: appCard(
+        child: AppCard(
           child: Form(
             key: _formKey,
             child: Column(
@@ -117,10 +117,12 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: _fazerLogin,
                   corBase: AppColors.verdePrimaria,
                   corTexto: AppColors.appBranco,
+                  corHover: AppColors.verdeEscuro,
                 ),
                 const SizedBox(height: 12.0),
                 AppButton(
                   label: 'Não tem uma conta? Cadastre-se',
+                  border: Border.all(color: AppColors.appPreto),
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/criarConta');
                   },
