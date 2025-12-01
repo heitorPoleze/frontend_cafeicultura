@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // validação se os dados foram preenchidos corretamente
   final _formKey = GlobalKey<FormState>();
 
   @override

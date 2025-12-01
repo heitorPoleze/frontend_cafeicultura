@@ -12,9 +12,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_web_plugins: # Adicione isso
+  flutter_web_plugins: 
     sdk: flutter
   cupertino_icons: ^1.0.8
+  table_calendar: ^3.1.1
+  flutter_localizations: 
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

@@ -19,7 +19,6 @@ class _EditarDadosPessoaisState extends State<EditarDadosPessoais> {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _dddController = TextEditingController();
   final TextEditingController _telefoneController = TextEditingController();
-  final TextEditingController _cpfController = TextEditingController();
   final TextEditingController _estadoController = TextEditingController();
   final TextEditingController _cepController = TextEditingController();
   final TextEditingController _cidadeController = TextEditingController();
@@ -35,17 +34,13 @@ class _EditarDadosPessoaisState extends State<EditarDadosPessoais> {
   @override
   void initState() {
     super.initState();
-    // 1. Chama a função para carregar os dados ao iniciar o widget
     _loadUserData();
   }
 
-  // 2. Função para resgatar os dados do usuário e preencher os campos
   void _loadUserData() {
-    // Simula a busca dos dados pessoais no "banco de dados"
     final userData = TestDB.getDadosPessoais();
 
     if (userData != null) {
-      // Preenche os controladores com as informações resgatadas
       _nomeController.text = userData['nome'] ?? '';
       _dddController.text = userData['ddd'] ?? '';
       _telefoneController.text = userData['telefone'] ?? '';
@@ -190,16 +185,32 @@ class _EditarDadosPessoaisState extends State<EditarDadosPessoais> {
                           ),
                         ],
                       ),
-                      
-                      // const SizedBox(height: 16.0),
-                      // AppInput(
-                      //   label: "CPF",
-                      //   hint: '00000000000',
-                      //   icon: Icons.badge,
-                      //   controller: _cpfController,
-                      //   keyboardType: TextInputType.number,
-                      //   validator: Validators.validarCPF,
-                      // ),
+                      const SizedBox(height: 16.0),
+                      AppInput(
+                        label: "Bairro",
+                        hint: 'Digite seu bairro',
+                        icon: Icons.home,
+                        controller: _bairroController,
+                        validator: Validators.validarBairro,
+                      ),
+                      const SizedBox(height: 16.0),
+                      AppInput(
+                        label: "Hectares",
+                        hint: 'Digite o tamanho da sua propriedade',
+                        icon: Icons.agriculture,
+                        controller: _hectaresController,
+                        keyboardType: TextInputType.number,
+                        validator: Validators.validarHectares,
+                      ),
+                      const SizedBox(height: 16.0),
+                      AppInput(
+                        label: "Colaboradores",
+                        hint: 'Quantidade de trabalhadores',
+                        icon: Icons.people,
+                        controller: _trabalhadoresController,
+                        keyboardType: TextInputType.number,
+                        validator: Validators.validarTrabalhadores,
+                      ),
                       const SizedBox(height: 28.0),
                       AppButton(
                         label: "Salvar Edição",
