@@ -5,11 +5,12 @@ import 'package:frontend_cafeicultura/view/criar_dados_pessoais.dart';
 import 'package:frontend_cafeicultura/view/criar_endereco.dart';
 import 'package:frontend_cafeicultura/view/criar_propriedade.dart';
 import 'package:frontend_cafeicultura/view/login_page.dart';
-import 'package:frontend_cafeicultura/view/home_page.dart';
+import 'package:frontend_cafeicultura/view/home_page.dart'; // Mantido para referência
 import 'package:frontend_cafeicultura/view/editar_dados_pessoais.dart';
 import 'package:frontend_cafeicultura/view/cadastro_evento_page.dart';
 import 'package:frontend_cafeicultura/view/notificacoes_page.dart';
 import 'package:frontend_cafeicultura/view/relatorio_financeiro_page.dart';
+import 'package:frontend_cafeicultura/view/navigation_wrapper.dart'; // Importe o novo Wrapper
 import 'config/app_colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginPage(),
-        '/home': (context) => const HomePage(),
+        '/home': (context) => const NavigationWrapper(), 
         '/criarConta': (context) => const CriarAutenticacao(),
         '/dadosPessoais': (context) => const CriarDadosPessoais(),
         '/criarEndereco': (context) => const CriarEndereco(),
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
               },
             );
           }
-          return MaterialPageRoute(builder: (context) => const HomePage());
+          return MaterialPageRoute(builder: (context) => const NavigationWrapper());
         }
         return null;
       },
