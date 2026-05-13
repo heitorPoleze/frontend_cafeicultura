@@ -7,6 +7,7 @@ import 'package:frontend_cafeicultura/components/app_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -17,6 +18,9 @@ class _HomePageState extends State<HomePage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
   late final ValueNotifier<List<Evento>> _selectedEvents;
+
+  // Bottom Bar
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -42,20 +46,56 @@ class _HomePageState extends State<HomePage> {
         _focusedDay = focusedDay;
         _selectedEvents.value = _getEventsForDay(selectedDay);
       });
+
       await Navigator.of(
         context,
-      ).pushNamed('/cadastrarEvento', arguments: selectedDay);
-      setState(() => _selectedEvents.value = _getEventsForDay(_selectedDay!));
+      ).pushNamed(
+        '/cadastrarEvento',
+        arguments: selectedDay,
+      );
+
+      setState(() {
+        _selectedEvents.value = _getEventsForDay(_selectedDay!);
+      });
+    }
+  }
+
+  // =========================
+  // BOTTOM BAR ACTIONS
+  // =========================
+  void _onItemTapped(int index) {
+    // Home
+    if (index == 0) {
+      setState(() {
+        _selectedIndex = 0;
+      });
+      return;
+    }
+
+    // Não muda o índice para evitar erro
+    switch (index) {
+      case 1:
+        Navigator.of(context).pushNamed('/notificacoes');
+        break;
+
+      case 2:
+        Navigator.of(context).pushNamed('/relatorioFinanceiro');
+        break;
+
+      case 3:
+        Navigator.of(context).pushNamed('/editarDados');
+        break;
     }
   }
 
   Widget _buildFinancialSummary(BuildContext context) {
     const double receita = 14700.00;
     const double despesa = 11850.00;
+
     final double saldo = receita - despesa;
-    final Color saldoColor = saldo > 0
-        ? Colors.green.shade700
-        : AppColors.marrom;
+
+    final Color saldoColor =
+        saldo > 0 ? Colors.green.shade700 : AppColors.marrom;
 
     return GestureDetector(
       onTap: () {
@@ -76,9 +116,13 @@ class _HomePageState extends State<HomePage> {
                     color: AppColors.verdePrimaria,
                   ),
                 ),
-                const Icon(Icons.show_chart, color: AppColors.verdePrimaria),
+                const Icon(
+                  Icons.show_chart,
+                  color: AppColors.verdePrimaria,
+                ),
               ],
             ),
+
             const Divider(height: 20),
 
             _buildFinanceRow(
@@ -86,12 +130,15 @@ class _HomePageState extends State<HomePage> {
               'R\$ ${receita.toStringAsFixed(2)}',
               Colors.green,
             ),
+
             _buildFinanceRow(
               'Total de Despesas:',
               'R\$ ${despesa.toStringAsFixed(2)}',
               Colors.red,
             ),
+
             const Divider(height: 20),
+
             _buildFinanceRow(
               'Saldo Líquido:',
               'R\$ ${saldo.toStringAsFixed(2)}',
@@ -99,6 +146,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             const SizedBox(height: 10),
+
             const Center(
               child: Text(
                 'Toque para ver o relatório completo',
@@ -115,13 +163,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildFinanceRow(String label, String value, Color color) {
+  Widget _buildFinanceRow(
+    String label,
+    String value,
+    Color color,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
         children: [
-          Text(label, style: const TextStyle(fontSize: 16)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16),
+          ),
+
           Text(
             value,
             style: TextStyle(
@@ -137,7 +195,9 @@ class _HomePageState extends State<HomePage> {
 
   String get _userName {
     final userData = TestDB.getDadosPessoais();
+
     final nomeCompleto = userData?['nome'] ?? 'Usuário';
+
     return nomeCompleto.split(' ')[0];
   }
 
@@ -145,6 +205,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBranco,
+
+      // =========================
+      // APP BAR
+      // =========================
       appBar: AppBar(
         elevation: 1,
         backgroundColor: AppColors.verdePrimaria,
@@ -152,15 +216,21 @@ class _HomePageState extends State<HomePage> {
 
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0),
+
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+
               children: <Widget>[
-                Image.asset('assets/images/logo.png', height: 56),
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 56,
+                ),
               ],
             ),
           ),
         ),
+
         leadingWidth: 100,
 
         actions: <Widget>[
@@ -171,6 +241,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.of(context).pushNamed('/notificacoes');
             },
           ),
+
           IconButton(
             icon: const Icon(Icons.person_outline),
             tooltip: 'Perfil',
@@ -178,13 +249,20 @@ class _HomePageState extends State<HomePage> {
               Navigator.of(context).pushNamed('/editarDados');
             },
           ),
+
           const SizedBox(width: 8),
         ],
       ),
+
+      // =========================
+      // BODY
+      // =========================
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: <Widget>[
             Text(
               'Bem-vindo(a), $_userName!',
@@ -194,25 +272,40 @@ class _HomePageState extends State<HomePage> {
                 color: AppColors.marrom,
               ),
             ),
+
             const SizedBox(height: 8),
+
             const Text(
               'Visão geral da sua fazenda:',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
             ),
+
             const SizedBox(height: 24),
 
             Card(
               elevation: 4,
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
+
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
+
                 child: TableCalendar<Evento>(
                   focusedDay: _focusedDay,
+
                   firstDay: DateTime.utc(2020, 1, 1),
+
                   lastDay: DateTime.utc(2030, 12, 31),
-                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+
                   onDaySelected: _onDaySelected,
 
                   eventLoader: _getEventsForDay,
@@ -223,9 +316,11 @@ class _HomePageState extends State<HomePage> {
                         return Positioned(
                           right: 1,
                           bottom: 1,
+
                           child: Container(
                             width: 6.0,
                             height: 6.0,
+
                             decoration: const BoxDecoration(
                               color: AppColors.verdePrimaria,
                               shape: BoxShape.circle,
@@ -233,11 +328,13 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       }
+
                       return null;
                     },
                   ),
 
                   calendarFormat: _calendarFormat,
+
                   onFormatChanged: (format) {
                     if (_calendarFormat != format) {
                       setState(() {
@@ -245,38 +342,46 @@ class _HomePageState extends State<HomePage> {
                       });
                     }
                   },
+
                   onPageChanged: (focusedDay) {
                     _focusedDay = focusedDay;
                   },
 
                   locale: 'pt_BR',
+
                   availableCalendarFormats: const {
                     CalendarFormat.month: 'Mês ➡️',
                     CalendarFormat.twoWeeks: '2 semanas ➡️',
                     CalendarFormat.week: 'Semana ➡️',
                   },
+
                   headerStyle: HeaderStyle(
                     formatButtonVisible: true,
                     titleCentered: true,
+
                     titleTextStyle: TextStyle(
                       color: AppColors.marrom,
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
+
                     leftChevronIcon: Icon(
                       Icons.chevron_left,
                       color: AppColors.verdePrimaria,
                     ),
+
                     rightChevronIcon: Icon(
                       Icons.chevron_right,
                       color: AppColors.verdePrimaria,
                     ),
                   ),
+
                   calendarStyle: CalendarStyle(
                     selectedDecoration: BoxDecoration(
                       color: AppColors.verdePrimaria,
                       shape: BoxShape.circle,
                     ),
+
                     selectedTextStyle: const TextStyle(
                       color: AppColors.appBranco,
                       fontWeight: FontWeight.bold,
@@ -286,6 +391,7 @@ class _HomePageState extends State<HomePage> {
                       color: AppColors.verdePrimaria.withValues(alpha: 0.3),
                       shape: BoxShape.circle,
                     ),
+
                     todayTextStyle: TextStyle(
                       color: AppColors.marrom,
                       fontWeight: FontWeight.bold,
@@ -294,19 +400,66 @@ class _HomePageState extends State<HomePage> {
                     weekendTextStyle: TextStyle(
                       color: AppColors.marrom.withValues(alpha: 0.8),
                     ),
+
                     defaultTextStyle: const TextStyle(
                       color: AppColors.appPreto,
                     ),
+
                     outsideDaysVisible: false,
                   ),
                 ),
               ),
             ),
+
             const SizedBox(height: 30),
+
             _buildFinancialSummary(context),
+
             const SizedBox(height: 30),
           ],
         ),
+      ),
+
+      // =========================
+      // BOTTOM NAVIGATION BAR
+      // =========================
+      bottomNavigationBar: NavigationBar(
+        height: 72,
+
+        selectedIndex: _selectedIndex,
+
+        onDestinationSelected: _onItemTapped,
+
+        backgroundColor: Colors.white,
+
+        indicatorColor:
+            AppColors.verdePrimaria.withValues(alpha: 0.15),
+
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home),
+            label: 'Início',
+          ),
+
+          NavigationDestination(
+            icon: Icon(Icons.notifications_outlined),
+            selectedIcon: Icon(Icons.notifications),
+            label: 'Avisos',
+          ),
+
+          NavigationDestination(
+            icon: Icon(Icons.bar_chart_outlined),
+            selectedIcon: Icon(Icons.bar_chart),
+            label: 'Financeiro',
+          ),
+
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            selectedIcon: Icon(Icons.person),
+            label: 'Perfil',
+          ),
+        ],
       ),
     );
   }
